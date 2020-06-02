@@ -18,7 +18,7 @@ public class ShellSort {
 			for (int i = step; i < arr.length; i++) {
 				int j = i;
 				int temp = arr[j];
-				// j - step 就是代表与它同组隔壁的元素
+				// j - step 就是代表与相同步长区间，不同组同位置的元素
 				while (j - step >= 0 && arr[j - step] > temp) {
 					arr[j] = arr[j - step];
 					j = j - step;
