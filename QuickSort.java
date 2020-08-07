@@ -5,13 +5,13 @@ import java.util.Arrays;
 import org.junit.Test;
 
 /**
- * ͨ��һ������Ҫ��������ݷָ�ɶ����������֣�����һ���ֵ��������ݶ�������һ���ֵ��������ݶ�ҪС��
- * Ȼ���ٰ��˷����������������ݷֱ���п�������
- * ����������̿��Եݹ���У��Դ˴ﵽ�������ݱ����������
+ * 通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，
+ * 然后再按此方法对这两部分数据分别进行快速排序，
+ * 整个排序过程可以递归进行，以此达到整个数据变成有序序列
  * @author ji
- * �ȴӶ�β��ʼ��ǰɨ���ҵ�low < highʱ,���a[high] > tmp,��high�C,�����a[high] < tmp,��high��ֵ��ֵ��low,��arr[low] = a[high],ͬʱҪת������ɨ��ķ�ʽ,����Ҫ�Ӷ��׿�ʼ���β����ɨ����
- * ͬ��,���Ӷ��׿�ʼ���β����ɨ��ʱ,���a[low] < tmp,��low++,�����a[low] > tmp��,�����Ҫ��lowλ�õ�ֵ��ֵ��highλ��,��arr[low] = arr[high],ͬʱ������ɨ�跽ʽ��Ϊ�ɶ�β����׽���ɨ��.
- * ���ظ��ٺ͢�,֪��low>=highʱ(��ʵ��low=high),low��high��λ�þ��Ǹû�׼�����������е���ȷ����λ��.
+ * 先从队尾开始向前扫描且当low < high时,如果a[high] > tmp,则high–,但如果a[high] < tmp,则将high的值赋值给low,即arr[low] = a[high],同时要转换数组扫描的方式,即需要从队首开始向队尾进行扫描了
+ * 同理,当从队首开始向队尾进行扫描时,如果a[low] < tmp,则low++,但如果a[low] > tmp了,则就需要将low位置的值赋值给high位置,即arr[low] = arr[high],同时将数组扫描方式换为由队尾向队首进行扫描.
+ * 不断重复①和②,知道low>=high时(其实是low=high),low或high的位置就是该基准数据在数组中的正确索引位置.
  */
 public class QuickSort {
 	public int[] quickSort(int[] array,int left,int right){
@@ -23,26 +23,26 @@ public class QuickSort {
         high = right;
         flag = array[left];
         while (low < high){
-            //�ȴ��ұ���
+            //先从右边找
             while (array[high] >= flag && low < high){
             	high --;
             }
-            //�ٴ������
+            //再从左边找
             while (array[low] <= flag && low < high){
             	low ++;
             }
-            //����
+            //交换
             if(low < high){
                 temp = array[low];
                 array[low] = array[high];
                 array[high] = temp;
             }
         }
-        //һ�˽����꽫��׼ֵ�����ٽ�λ��
+        //一趟交换完将基准值放入临界位置
         array[left] = array[low];
         array[low] = flag;
-        //����ݹ�
-        quickSort(array,left,low-1);
+        //向左递归
+        quickSort(array,left,low);
         quickSort(array,low+1,right);
 		return array;
 	}
