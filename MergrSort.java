@@ -1,60 +1,62 @@
-package sort;
+package letcode;
 
 import java.util.Arrays;
 
-import org.junit.Test;
-
 /**
- * ¶şÂ·¹é²¢
- * ·Ö¶øÖÎÖ®(divide - conquer);Ã¿¸öµİ¹é¹ı³ÌÉæ¼°Èı¸ö²½Öè
- * µÚÒ», ·Ö½â: °Ñ´ıÅÅĞòµÄ n ¸öÔªËØµÄĞòÁĞ·Ö½â³ÉÁ½¸ö×ÓĞòÁĞ, Ã¿¸ö×ÓĞòÁĞ°üÀ¨ n/2 ¸öÔªËØ.
- * µÚ¶ş, ÖÎÀí: ¶ÔÃ¿¸ö×ÓĞòÁĞ·Ö±ğµ÷ÓÃ¹é²¢ÅÅĞòMergeSort, ½øĞĞµİ¹é²Ù×÷
- * µÚÈı, ºÏ²¢: ºÏ²¢Á½¸öÅÅºÃĞòµÄ×ÓĞòÁĞ,Éú³ÉÅÅĞò½á¹û.
- * @author ji
+ * äºŒè·¯å½’å¹¶
+ * åˆ†è€Œæ²»ä¹‹(divide - conquer);æ¯ä¸ªé€’å½’è¿‡ç¨‹æ¶‰åŠä¸‰ä¸ªæ­¥éª¤
+ * ç¬¬ä¸€, åˆ†è§£: æŠŠå¾…æ’åºçš„ n ä¸ªå…ƒç´ çš„åºåˆ—åˆ†è§£æˆä¸¤ä¸ªå­åºåˆ—, æ¯ä¸ªå­åºåˆ—åŒ…æ‹¬ n/2 ä¸ªå…ƒç´ .
+ * ç¬¬äºŒ, æ²»ç†: å¯¹æ¯ä¸ªå­åºåˆ—åˆ†åˆ«è°ƒç”¨å½’å¹¶æ’åºMergeSort, è¿›è¡Œé€’å½’æ“ä½œ
+ * ç¬¬ä¸‰, åˆå¹¶: åˆå¹¶ä¸¤ä¸ªæ’å¥½åºçš„å­åºåˆ—,ç”Ÿæˆæ’åºç»“æœ.
  *
+ * @author ji
  */
-public class MergrSort {
-	public int[] mergrSort(int[] arr, int low, int high) {
-		int mid = (low + high) / 2;
-		if (low < high) {
-			mergrSort(arr, low, mid);
-			mergrSort(arr, mid+1, high);
-			// ºÏ²¢
-			merge(arr, low, mid, high);
-		}
-		return arr;
-	}
+public class MergeSort {
 
-	public void merge(int[] arr, int low, int mid, int high) {
-		int[] temp = new int[high - low + 1];
-		int i = low;
-		int j = mid + 1;
-		int k = 0;
-		// °Ñ½ÏĞ¡µÄÊıÏÈÒÆµ½ĞÂÊı×éÖĞ
-		while (i <= mid && j <= high) {
-			if (arr[i] < arr[j]) {
-				temp[k++] = arr[i++];
-			} else {
-				temp[k++] = arr[j++];
-			}
-		}
-		// °Ñ×ó±ßÊ£ÓàµÄÊıÒÆÈëÊı×é
-		while (i <= mid) {
-			temp[k++] = arr[i++];
-		}
-		// °ÑÓÒ±ßÊ£ÓàµÄÊıÒÆÈëÊı×é
-		while (j <= high) {
-			temp[k++] = arr[j++];
-		}
-		// °ÑĞÂÊı×éÖĞµÄÊı¸³¸øarrÊı×é
-		for(int x=0;x<temp.length;x++){
-			arr[x+low] =temp[x];
-		}
-	}
+    public static void merge(int[] arr, int low, int mid, int high) {
+        int[] temp = new int[high - low + 1];
+        int i = low;// å·¦æŒ‡é’ˆ
+        int j = mid + 1;// å³æŒ‡é’ˆ
+        int k = 0;
+        // æŠŠè¾ƒå°çš„æ•°å…ˆç§»åˆ°æ–°æ•°ç»„ä¸­
+        while (i <= mid && j <= high) {
+            if (arr[i] < arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+        // æŠŠå·¦è¾¹å‰©ä½™çš„æ•°ç§»å…¥æ•°ç»„
+        while (i <= mid) {
+            temp[k++] = arr[i++];
+        }
+        // æŠŠå³è¾¹è¾¹å‰©ä½™çš„æ•°ç§»å…¥æ•°ç»„
+        while (j <= high) {
+            temp[k++] = arr[j++];
+        }
+        // æŠŠæ–°æ•°ç»„ä¸­çš„æ•°è¦†ç›–numsæ•°ç»„
+        for (int k2 = 0; k2 < temp.length; k2++) {
+            arr[k2 + low] = temp[k2];
+        }
+    }
 
-	@Test
-	public void test() {
-		int[] arr = { 1, 10, 35, 61, 89, 36, 55 };
-		System.out.println(Arrays.toString(mergrSort(arr, 0, arr.length-1)));
-	}
+    public static void mergeSort(int[] arr, int low, int high) {
+        int mid = (low + high) / 2;
+        if (low < high) {
+            // å·¦è¾¹
+            mergeSort(arr, low, mid);
+            // å³è¾¹
+            mergeSort(arr, mid + 1, high);
+            // å·¦å³å½’å¹¶
+            merge(arr, low, mid, high);
+            System.out.println(Arrays.toString(arr));
+        }
+
+    }
+
+    public static void main(String[] args) {
+        int arr[] = {51, 46, 20, 18, 65, 97, 82, 30, 77, 50};
+        mergeSort(arr, 0, arr.length - 1);
+        System.out.println("æ’åºç»“æœï¼š" + Arrays.toString(arr));
+    }
 }
