@@ -13,6 +13,19 @@ import java.util.Arrays;
  */
 public class MergeSort {
 
+    public static void mergeSort(int[] arr, int low, int high) {
+        int mid = (low + high) / 2;
+        if (low < high) {
+            // 左边
+            mergeSort(arr, low, mid);
+            // 右边
+            mergeSort(arr, mid + 1, high);
+            // 左右归并
+            merge(arr, low, mid, high);
+            System.out.println(Arrays.toString(arr));
+        }
+    }
+
     public static void merge(int[] arr, int low, int mid, int high) {
         int[] temp = new int[high - low + 1];
         int i = low;// 左指针
@@ -40,19 +53,6 @@ public class MergeSort {
         }
     }
 
-    public static void mergeSort(int[] arr, int low, int high) {
-        int mid = (low + high) / 2;
-        if (low < high) {
-            // 左边
-            mergeSort(arr, low, mid);
-            // 右边
-            mergeSort(arr, mid + 1, high);
-            // 左右归并
-            merge(arr, low, mid, high);
-            System.out.println(Arrays.toString(arr));
-        }
-
-    }
 
     public static void main(String[] args) {
         int arr[] = {51, 46, 20, 18, 65, 97, 82, 30, 77, 50};
